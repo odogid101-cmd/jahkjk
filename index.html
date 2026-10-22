@@ -31,6 +31,7 @@
       color: var(--ink);
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     a {
       color: inherit;
@@ -42,6 +43,36 @@
     button {
       cursor: pointer;
     }
+
+    /* Animation Keyframes & Reveal Classes */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
 
     /* Top Announcement Bar */
     .announcement {
@@ -55,6 +86,7 @@
       font-weight: 700;
       letter-spacing: 1.5px;
       color: var(--ink);
+      animation: fadeInDown 0.5s ease forwards;
     }
     .announcement span {
       font-size: 12px;
@@ -72,12 +104,17 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      animation: fadeInDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .logo {
       font-family: var(--display);
       font-size: 28px;
       font-weight: 700;
       letter-spacing: -1.5px;
+      transition: opacity 0.2s;
+    }
+    .logo:hover {
+      opacity: 0.7;
     }
     .logo span {
       font: 10px var(--font);
@@ -93,9 +130,11 @@
       font-size: 12px;
       font-weight: 600;
       letter-spacing: -0.2px;
+      transition: opacity 0.2s, transform 0.2s;
     }
     .nav a:hover, footer a:hover {
       opacity: .5;
+      transform: translateY(-1px);
     }
     .header-actions {
       display: flex;
@@ -115,10 +154,12 @@
       padding: 8px 14px;
       width: 210px;
       background: #fff;
-      transition: border-color 0.2s;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .search-box:focus-within {
       border-color: var(--ink);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      width: 230px;
     }
     .search-box span {
       font-size: 15px;
@@ -136,6 +177,10 @@
     .cart-button {
       display: flex;
       align-items: center;
+      transition: transform 0.2s;
+    }
+    .cart-button:hover {
+      transform: scale(1.05);
     }
     .cart-button span {
       display: inline-grid;
@@ -148,6 +193,7 @@
       margin-left: 6px;
       font-size: 10px;
       font-weight: 700;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .menu-toggle {
       display: none;
@@ -176,6 +222,7 @@
       top: 20%;
       max-width: 540px;
       z-index: 2;
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .eyebrow {
       font-size: 9px;
@@ -224,7 +271,7 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       border: 0;
-      transition: background-color 0.2s, color 0.2s, transform 0.2s;
+      transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
     }
     .button:active {
       transform: scale(0.98);
@@ -236,9 +283,15 @@
     }
     .button-light:hover {
       background: var(--lime);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(212, 255, 71, 0.25);
     }
     .button span {
       font-size: 16px;
+      transition: transform 0.2s;
+    }
+    .button:hover span {
+      transform: translateX(3px);
     }
     .hero-aside {
       position: absolute;
@@ -247,6 +300,7 @@
       display: grid;
       gap: 24px;
       z-index: 2;
+      animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hero-aside > div {
       display: flex;
@@ -257,6 +311,11 @@
       padding: 12px 18px;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s, background 0.3s;
+    }
+    .hero-aside > div:hover {
+      transform: translateX(-5px);
+      background: rgba(255, 255, 255, 0.09);
     }
     .feature-icon {
       font-size: 20px;
@@ -288,6 +347,7 @@
       letter-spacing: 2px;
       color: #999;
       z-index: 2;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     /* Category Strip */
@@ -304,10 +364,11 @@
       gap: 14px;
       padding: 0 16px;
       border-right: 1px solid var(--line);
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, transform 0.2s;
     }
     .category-strip > a:hover {
       opacity: 0.6;
+      transform: translateY(-2px);
     }
     .category-strip > a:first-child {
       padding-left: 0;
@@ -323,6 +384,12 @@
       border-radius: 12px;
       background: var(--paper);
       font-size: 22px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .category-strip > a:hover .category-icon {
+      background: var(--ink);
+      color: var(--lime);
+      transform: rotate(6deg);
     }
     .category-strip strong, .category-strip small {
       display: block;
@@ -370,12 +437,13 @@
       font-size: 10px;
       font-weight: 600;
       border-radius: 20px;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .filter.active, .filter:hover {
       background: var(--ink);
       border-color: var(--ink);
       color: white;
+      transform: translateY(-1px);
     }
     .product-grid {
       display: grid;
@@ -384,6 +452,10 @@
     }
     .product-card {
       min-width: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
     }
     .product-card[hidden] {
       display: none !important;
@@ -400,10 +472,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform .5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .product-card:hover .product-image img {
-      transform: scale(1.04);
+      transform: scale(1.06);
     }
     .product-tag {
       position: absolute;
@@ -489,6 +561,10 @@
       object-position: center 36%;
       filter: grayscale(20%);
       opacity: .85;
+      transition: transform 0.6s ease;
+    }
+    .whatsapp-section:hover .wa-art img {
+      transform: scale(1.03);
     }
     .wa-copy {
       padding: 60px 12%;
@@ -504,6 +580,10 @@
       font-size: 22px;
       margin-bottom: 24px;
       color: #fff;
+      transition: transform 0.3s;
+    }
+    .whatsapp-section:hover .wa-mark {
+      transform: scale(1.1) rotate(10deg);
     }
     .wa-copy h2, .about-copy h2 {
       font-family: var(--display);
@@ -524,9 +604,12 @@
       font-weight: 700;
       border-radius: 30px;
       margin: 12px 0 16px;
+      transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
     }
     .button-green:hover {
       background: #1ebe5d;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
     }
     .wa-copy small {
       display: block;
@@ -552,6 +635,7 @@
       width: 100%;
       height: 100%;
       border: none;
+      transition: transform 0.6s ease;
     }
     .about-copy {
       padding: 55px 10%;
@@ -574,6 +658,11 @@
       letter-spacing: 1.2px;
       border-bottom: 1px solid var(--ink);
       padding-bottom: 4px;
+      transition: opacity 0.2s, padding-left 0.2s;
+    }
+    .text-link:hover {
+      opacity: 0.6;
+      padding-left: 4px;
     }
     .about-points {
       grid-column: 1 / -1;
@@ -589,6 +678,10 @@
       gap: 6px;
       text-align: center;
       border-right: 1px solid var(--line);
+      transition: transform 0.3s;
+    }
+    .about-points > div:hover {
+      transform: translateY(-3px);
     }
     .about-points > div:last-child {
       border: 0;
@@ -630,6 +723,10 @@
       margin: auto;
       border-bottom: 2px solid var(--ink);
       padding-bottom: 4px;
+      transition: border-color 0.3s;
+    }
+    .newsletter form:focus-within {
+      border-color: #6a8c03;
     }
     .newsletter input {
       flex: 1;
@@ -647,6 +744,11 @@
       font-weight: 700;
       padding: 0 10px;
       letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .newsletter form button:hover {
+      opacity: 0.6;
+      transform: translateX(2px);
     }
     .newsletter small {
       display: block;
@@ -698,7 +800,7 @@
       z-index: 30;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .25s ease, visibility .25s ease;
+      transition: opacity .3s ease, visibility .3s ease;
       backdrop-filter: blur(2px);
     }
     .overlay.visible {
@@ -715,7 +817,7 @@
       background: var(--paper);
       padding: 28px;
       transform: translateX(100%);
-      transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       box-shadow: -10px 0 30px rgba(0,0,0,0.08);
@@ -747,9 +849,11 @@
       border: 0;
       line-height: 1;
       color: var(--muted);
+      transition: transform 0.2s, color 0.2s;
     }
     .drawer-head button:hover {
       color: var(--ink);
+      transform: rotate(90deg);
     }
     .cart-items {
       flex: 1;
@@ -770,6 +874,7 @@
       align-items: center;
       padding: 14px 0;
       border-bottom: 1px solid var(--line);
+      animation: fadeIn 0.4s ease;
     }
     .cart-thumb {
       height: 60px;
@@ -811,6 +916,12 @@
       line-height: 1;
       padding: 0;
       font-weight: 700;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .qty-btn:hover {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
     }
     .qty-num {
       font-size: 10px;
@@ -823,6 +934,7 @@
       font-size: 9px;
       color: var(--muted);
       padding: 0;
+      transition: color 0.2s;
     }
     .remove-item:hover {
       color: var(--ink);
@@ -845,9 +957,12 @@
       justify-content: center;
       border-radius: 30px;
       padding: 16px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     }
     .button-dark:hover {
       background: #2a2e2b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(18, 20, 19, 0.2);
     }
     .cart-footer small {
       display: block;
@@ -863,7 +978,7 @@
       z-index: 60;
       bottom: 25px;
       left: 50%;
-      transform: translate(-50%, 20px);
+      transform: translate(-50%, 30px);
       background: var(--ink);
       color: white;
       padding: 14px 24px;
@@ -872,7 +987,7 @@
       border-radius: 30px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .25s ease, transform .25s ease;
+      transition: opacity .3s cubic-bezier(0.16, 1, 0.3, 1), transform .3s cubic-bezier(0.16, 1, 0.3, 1);
       max-width: 90%;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -1157,7 +1272,7 @@
       </div>
     </section>
 
-    <section class="category-strip" aria-label="Shop categories">
+    <section class="category-strip reveal" aria-label="Shop categories">
       <a href="#shop" data-jump-filter="tops">
         <span class="category-icon">♧</span>
         <span><strong>Hoodies & tees</strong><small>Everyday layers ↗</small></span>
@@ -1176,7 +1291,7 @@
       </a>
     </section>
 
-    <section class="shop-section" id="shop">
+    <section class="shop-section reveal" id="shop">
       <div class="section-heading">
         <div>
           <p class="eyebrow">CURATED FOR YOUR ROTATION</p>
@@ -1262,7 +1377,7 @@
       <p class="demo-note">Product images and prices are sample content. Replace them with your actual stock, photos and prices before launch.</p>
     </section>
 
-    <section class="whatsapp-section" id="contact">
+    <section class="whatsapp-section reveal" id="contact">
       <div class="wa-art">
         <img src="https://i.postimg.cc/T1cfrqvB/kkkkk.png" alt="ZAKER grey hoodie product detail">
       </div>
@@ -1276,7 +1391,7 @@
       </div>
     </section>
 
-    <section class="about-section" id="about">
+    <section class="about-section reveal" id="about">
       <div class="about-image">
         <iframe allow="fullscreen" allowfullscreen src="https://streamable.com/e/uilya7?loop=0&nocontrols=1" style="width:100%;height:100%;border:none;"></iframe>
       </div>
@@ -1305,7 +1420,7 @@
       </div>
     </section>
 
-    <section class="newsletter">
+    <section class="newsletter reveal">
       <p class="eyebrow">BE FIRST IN LINE</p>
       <h2>Good things don't<br>wait around<span>.</span></h2>
       <p>Drop alerts, restocks and occasional good news. No noise.</p>
@@ -1317,7 +1432,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer class="reveal">
     <a class="logo" href="#home">ZAKER<span>®</span></a>
     <p>Made for your own lane.</p>
     <div>
@@ -1350,6 +1465,25 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script>
+    // Scroll Reveal Intersection Observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
     // Product Catalog Database
     const products = {
       hoodie: {
